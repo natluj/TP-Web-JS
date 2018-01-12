@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>TP JS</title>
+</head>
+<script type="text/javascript">
+	//TP3.1 a) Primitifs
+	console.log('a -----------------');
+	var q = 'truc';
+	var s = 25;
+	var g = undefined;
+	var f = null;
+	console.log(q, s, g, f);
+
+	//TP3.1 b) Objets et Tableaux
+	console.log('b -----------------');
+	var etudiant1 = {
+		nom : 'SSO',
+		prenom : 'Hamida',
+		age : 23
+	};
+	var etudiant2 = {
+		nom : 'AUPETIT',
+		prenom : 'Sapho',
+		age : 26
+	};
+	var etudiant3 = {
+		nom : 'NEDJARI',
+		prenom : 'Moussa',
+		age : 25
+	};
+	var session = [ etudiant1, etudiant2, etudiant3 ];
+	console.log(session[1].nom);
+
+	//TP3.1 c) Boucles et conditions
+	console.log('c -----------------');
+	for (var i = 0; i < 101; i++) {
+		if (i % 5 === 0 || i % 7 === 0) {
+			console.log(i);
+		}
+		;
+	}
+
+	//TP3.1 d) Fonctions classiques
+	console.log('d -----------------');
+	function truc(a, b, c, d) {
+		var list = [ a, b, c, d ];
+		console.log(list.sort());
+	}
+	truc(session[0].nom, session[1].prenom, session[2].nom, session[0].age);
+
+	function troc() {
+		var list2 = [];
+		for (var i = 0; i < arguments.length; i++) {
+			list2.push(arguments[i])
+		}
+		console.log(list2.sort());
+	}
+	troc(null, session[0].nom, 'Patate', session[1].prenom, 254258,
+			session[2].nom, undefined, session[0].age, 'Banzai !!');
+
+	//TP3.1 e) Fonctions particulières
+	console.log('e -----------------');
+	var cpt; // on essaie d'appeler le moins possible la fonction
+	var entiers = [];
+	function fibonacci(n) {
+		cpt++;
+		if (entiers[n] !== undefined) {
+			return entiers[n];
+		} else {
+			if (n === 0 || n === 1) {
+				entiers[n] = 1;
+			}
+			else {
+				entiers[n] = fibonacci(n - 1) + fibonacci(n - 2);
+			}
+			return entiers[n];
+		}
+	}
+
+	/*
+	Pour passer la méthode en global, on écrit :
+		(function(toto) {
+			var entiers = [];
+			...
+		})(this);
+	this : pointe sur windows, l'objet global de référence
+	*/
+	
+	function exponentielle(n) {
+		return Math.pow(2, n);
+	}
+
+	var listval = [];
+	for (var j = 0; j < 10; j++) {
+		listval.push(j);
+	}
+	function affiche(liste, fonction) {
+		for (var k = 0; k < liste.length; k++) {
+			liste[k] = fonction(liste[k]);
+			console.log(liste[k]);
+		}
+	}
+	cpt = 0;
+	console.log(fibonacci(21), cpt);
+	affiche(listval, fibonacci);
+	affiche(listval, exponentielle);
+
+	//TP3.1 f) Portée
+	console.log('f -----------------');
+	var resultat = 0;
+	function bizarre() {
+		into(10);
+		return resultat;
+	}
+	function into(max) {
+		for (i=0; i<10; i++) {
+			resultat++;
+		}
+	}
+	console.log(bizarre());
+	
+	//TP3.1 g) Mise en jambe : les daaaaaates !!!!
+	console.log('f -----------------');
+	var zodiac = {}
+	
+	
+</script>
+
+<body>
+
+</body>
+</html>

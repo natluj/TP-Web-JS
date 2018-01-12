@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript">
+	//TP3.2 : Classe / Prototype
+	/* Prototype Personne */
+	function Personne() {
+		this.nom = 'nobody';
+		this.dateNaissance;
+	}
+	Personne.prototype.getNom = function() {
+		return this.nom;
+	}
+	Personne.prototype.setNom = function(nom) {
+		this.nom = nom;
+	}
+	var p1 = new Personne();
+	var p2 = new Personne();
+	p1.setNom('quelqu\'un');
+	console.log(p1.getNom());
+	console.log(p2.getNom());
+	
+	Personne.prototype.setDateNaissance = function(date) {
+		this.dateNaissance = date;
+	}
+	Personne.prototype.getAge = function() {
+		var auj = new Date(2018,0,4,1),
+		annee = auj.getYear() - this.dateNaissance.getYear(),
+		mois = auj.getMonth() - this.dateNaissance.getMonth(),
+		jour = auj.getDay() - this.dateNaissance.getDay();
+		if (auj.getMonth()===this.dateNaissance.getMonth() && auj.getDay()<this.dateNaissance.getDay()) {
+			annee--;
+		}
+		if (mois<0) {
+			mois = (11-Math.abs(mois)) + auj.getMonth() + 1;
+		}
+		if (this.dateNaissance.getDay()<0) {
+			jour = 30-jour+Math.abs(this.dateNaissance.getDay());
+			mois--;
+		}
+		var age = '('+annee+'ans, '+mois+'mois, '+jour+'jours)';
+		return age;
+	}
+	Personne.prototype.afficheAge = function() {
+		console.log('age: '+this.getAge());
+	}
+	console.log(new Date());
+	p1.setDateNaissance(new Date(1988,6,7,2));
+	console.log(p1.dateNaissance);
+	p1.afficheAge();
+	p2.setDateNaissance(new Date(1988,0,2,1));
+	console.log(p2.dateNaissance);
+	p2.afficheAge();
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>

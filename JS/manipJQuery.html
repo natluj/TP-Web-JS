@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<title>Canvasssss</title>
+<style type="text/css">
+	ol li.indispo {
+		color: red;
+		text-decoration: line-through;
+	}
+	ol li.dispo {
+		color: green;
+	}
+</style>
+</head>
+<header>
+<script type="text/javascript">
+	//TP3.3
+	/* Les fonctions */
+	function Book(title, lent) {
+		this.id = idt++;
+		this.titre = title;
+		this.emprunte = lent;
+		biblio.push(this);
+		$(dessine2());
+
+		$('<li></li>')
+			.appendTo('ol')
+			.append(this.titre)
+			.addClass(this.emprunte ? 'indispo' : 'dispo');
+		
+		$(document).ready(function(){
+			showList(biblio);
+		});
+	}
+	function nbBooks(list) {
+		return list.length;
+	}
+	function nbBooksDispos(list) {
+		var dispo = [];
+		/* for ( var livre in biblio) {
+			if (list[livre].emprunte !== true) {
+				dispo.push(list[livre]);
+			}
+		} */
+		dispo = list.filter(l => !l.emprunte);
+		return dispo.length;
+	}
+	function howManyPercentLent(library) {
+		return nbBooksDispos(library) / library.length;
+	}
+	function dessine() {
+		/* cercle et camemberts */
+		drawCircle(150, 150, 2 * Math.PI * howManyPercentLent(biblio), 2 * Math.PI, 'red');
+		drawCircle(150, 150, 0, 2 * Math.PI * howManyPercentLent(biblio),'green');
+	}
+	function dessine2() {
+		if (document.getElementById('emmental')) {
+			var ctx = document.getElementById('emmental').getContext('2d');
+			dessine();
+		}
+	}
+	function showList(list) {
+		$('ol#catalogue li').remove();
+		//var bookNum = 0;
+		for (var truc in list) {
+			//console.log(list[truc].titre);
+			
+			$('<li></li>').append(list[truc].titre)
+			//.click(function(){borrowOrGiveBack(list[truc];)})
+			.addClass(list[truc].emprunte ? 'indispo' : 'dispo')
+			.appendTo('ol#catalogue');
+		}
+		$(document).ready(function(){
+			totalDispo(biblio);
+		});
+	}
+	function totalDispo(list) {
+		$('div#total p').remove();
+		$('<p></p>')
+			.appendTo('div#total')
+			.append(nbBooksDispos(list) + ' / ' +nbBooks(list));
+	}
+	function borrowOrGiveBack(livre) {
+		return !livre.emprunte;
+	}
+	
+	/* L'exécution */
+	var biblio = [];
+	var idt = 0;
+	var livre1 = {
+		id : idt++,
+		titre : 'La Quête d\'Ewilan : D\'un monde à l\'autre',
+		emprunte : true
+	}
+	var livre2 = {
+		id : idt++,
+		titre : 'La Quête d\'Ewilan : Les Frontières de glace'
+	}
+	
+	$(document).ready(function(){
+		showList(biblio);
+	});
+	
+	biblio.push(livre1);
+	biblio.push(livre2);
+	new Book('La Quête d\'Ewilan : L\'Île du destin', true);
+	new Book('Les Mondes d\'Ewilan : La Forêt des captifs', false);
+	new Book('Les Mondes d\'Ewilan : L\'Oeil d\'Otolep');
+	new Book('Les Mondes d\'Ewilan : Les Tentacules du Mal');
+	console.log($(nbBooks(biblio)));
+	console.log($(nbBooksDispos(biblio)));
+	console.info($(howManyPercentLent(biblio)));
+	console.warn($(biblio));
+</script>
+</header>
+<body>
+	<!-- Notre came... emmental -->
+	<canvas id="emmental" width="300px" height="300px">
+	</canvas>
+	<!-- Liste à remplir -->
+	<ol id="catalogue">
+		<li>Heeeeeeeeeeeeeeey</li>
+	</ol>
+	<div id="total"></div>
+	<!-- Dessin avec javascript -->
+	<script type="text/javascript">
+		/* fonction cercle */
+		function drawCircle(x, y, startA, endA, color) {
+			var ctx = document.getElementById('emmental').getContext('2d');
+			ctx.beginPath();
+			ctx.fillStyle = color;
+			ctx.arc(x, y, 100, startA, endA, false);
+			ctx.lineTo(x, y);
+			ctx.fill();
+			ctx.stroke();
+		}
+		dessine();
+	</script>
+	
+</body>
+</html>

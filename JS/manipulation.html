@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Canvasssss</title>
+<script type="text/javascript">
+	//TP3.3
+	/* Les fonctions */
+	function Book(title, lent) {
+		this.id = idt++;
+		this.titre = title;
+		this.emprunte = lent;
+		biblio.push(this);
+		dessine2();
+	}
+	function nbBooks(list) {
+		return list.length;
+	}
+	function nbBooksDispos(list) {
+		var dispo = [];
+		/* for ( var livre in biblio) {
+			if (list[livre].emprunte !== true) {
+				dispo.push(list[livre]);
+			}
+		} */
+		dispo = list.filter(l => !l.emprunte);
+		return dispo.length;
+	}
+	function howManyPercentLent(library) {
+		return nbBooksDispos(library) / library.length;
+	}
+	function dessine() {
+		/* cercle et camemberts */
+		drawCircle(150, 150, 2 * Math.PI * howManyPercentLent(biblio), 2 * Math.PI, 'red');
+		drawCircle(150, 150, 0, 2 * Math.PI * howManyPercentLent(biblio),'green');
+	}
+	function dessine2() {
+		if (document.getElementById('emmental')) {
+			var c = document.getElementById('emmental');
+			var ctx = c.getContext('2d');
+			dessine();
+		}
+	}
+
+	/* L'exécution */
+	var biblio = [];
+	var idt = 0;
+	var livre1 = {
+		id : idt++,
+		titre : 'La Quête d\'Ewilan : D\'un monde à l\'autre',
+		emprunte : true
+	}
+	var livre2 = {
+		id : idt++,
+		titre : 'La Quête d\'Ewilan : Les Frontières de glace'
+	}
+	biblio.push(livre1);
+	biblio.push(livre2);
+	var livre3 = new Book('La Quête d\'Ewilan : L\'Île du destin', true);
+	var livre4 = new Book('Les Mondes d\'Ewilan : La Forêt des captifs', false);
+	var livre5 = new Book('Les Mondes d\'Ewilan : L\'Oeil d\'Otolep');
+	var livre6 = new Book('Les Mondes d\'Ewilan : Les Tentacules du Mal');
+	console.log(nbBooks(biblio));
+	console.log(nbBooksDispos(biblio));
+	console.info(howManyPercentLent(biblio));
+	console.warn(biblio);
+</script>
+</head>
+<body>
+	<!-- Notre came... emmental -->
+	<canvas id="emmental" width="300px" height="300px">
+	</canvas>
+	<!-- dessin avec javascript -->
+	<script type="text/javascript">
+		/* fonction cercle */
+		function drawCircle(x, y, startA, endA, color) {
+			var c = document.getElementById('emmental');
+			var ctx = c.getContext('2d');
+			ctx.beginPath();
+			ctx.fillStyle = color;
+			ctx.arc(x, y, 100, startA, endA, false);
+			ctx.lineTo(x, y);
+			ctx.fill();
+			ctx.stroke();
+		}
+		dessine();
+	</script>
+</body>
+</html>

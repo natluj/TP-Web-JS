@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Test : variables js</title>
+
+<script type="text/javascript">
+		//Déclaration de variables
+		var obj = {};
+		obj.a = 1;
+		obj.b = 2;
+		obj.sub = {};
+		obj.sub.toto = 'Une string';
+		obj.sub.liste = [];
+		obj.sub.liste.push('index 0');
+		obj.sub.liste.push('index 1');
+		obj.sub.liste.push({t:45, v:568});
+		obj.sub.liste[9] = 'index 9';
+		
+		var personne = {};
+		personne.age = 28;
+		personne.nom = 'Toto';
+		console.log(personne);
+		
+		var nombres = [];
+		nombres[4] = 4;
+		nombres[6] = 7;
+		nombres[2] = 8;
+		console.log(nombres.length);
+		
+		//Les boucles : affichage
+		console.log('------------------');
+		for (var key in personne) {
+			console.log(key, personne[key]);
+		}
+		
+		for (var clef in obj) {
+			console.log(clef, obj[clef]);
+		}
+		for (var item of obj.sub.liste) {
+			console.log(item);
+		}
+		
+		//les fonctions
+		console.log('------------------');
+		var list = [];
+		while(Math.random()<0.8){
+			var element = {
+				id : list.length +1,
+				name : 'Objet n°' + (list.length +1)
+			};
+			list.push(element);
+		}
+		console.log(list);
+		var list1 = list.filter(function(item){
+			return item.id>3;
+		});
+		console.log(list1);
+		var list2 = list.map(function(item){
+			return item.name.replace('°', '-');
+		});
+		console.log(list2);
+		
+		
+		//petit exo
+		var plop = 'plop';
+		
+	</script>
+
+</head>
+<body>
+</body>
+</html>
